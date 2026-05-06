@@ -21,7 +21,7 @@ function renderFilters() {
   const categories = [...new Set(artworks.map((item) => item.category).filter(Boolean))];
   
   const filters = [
-    { label: "⭐ Destaque", value: "featured" },
+    { label: "Destaque", value: "featured" },
     ...categories.map((category) => ({ 
       label: categoryLabel(category), 
       value: category 

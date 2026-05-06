@@ -653,4 +653,220 @@ a {
   .contact-list a {
     flex-direction: column;
   }
+  /* ============================================ */
+/* LAYOUT PARA DESTAQUES - HORIZONTAL SCROLL     */
+/* ============================================ */
+
+/* Container principal da galeria */
+.gallery-section {
+  overflow-x: hidden;
+}
+
+/* Layout horizontal para os destaques */
+.gallery-featured {
+  display: flex !important;
+  flex-direction: row !important;
+  overflow-x: auto !important;
+  gap: 1.5rem !important;
+  padding: 1rem 0.5rem 2rem 0.5rem !important;
+  scroll-snap-type: x mandatory !important;
+  -webkit-overflow-scrolling: touch !important;
+  margin-bottom: 1rem;
+}
+
+/* Estilização da scrollbar */
+.gallery-featured::-webkit-scrollbar {
+  height: 8px;
+}
+
+.gallery-featured::-webkit-scrollbar-track {
+  background: var(--line);
+  border-radius: 10px;
+}
+
+.gallery-featured::-webkit-scrollbar-thumb {
+  background: var(--terracotta);
+  border-radius: 10px;
+}
+
+.gallery-featured::-webkit-scrollbar-thumb:hover {
+  background: var(--green);
+}
+
+/* Cards menores para destaque - versão horizontal */
+.art-card-featured {
+  flex: 0 0 auto !important;
+  width: 220px !important;
+  scroll-snap-align: start !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.art-card-featured:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow);
+}
+
+.art-card-featured img {
+  aspect-ratio: 3 / 4;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+
+.art-card-featured:hover img {
+  transform: scale(1.045);
+}
+
+.art-card-featured .art-info {
+  padding: 0.75rem;
+}
+
+.art-card-featured h3 {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.art-card-featured p {
+  font-size: 0.7rem;
+  margin: 0;
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Mantém o layout em grid para as outras categorias */
+.gallery:not(.gallery-featured) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+/* Ajuste para o elemento gallery base */
+[data-gallery] {
+  transition: all 0.3s ease;
+}
+
+/* ============================================ */
+/* RESPONSIVIDADE PARA DESTAQUES               */
+/* ============================================ */
+
+/* Tablet */
+@media (max-width: 820px) {
+  .art-card-featured {
+    width: 200px !important;
+  }
+  
+  .art-card-featured h3 {
+    font-size: 0.9rem;
+  }
+  
+  .art-card-featured p {
+    font-size: 0.65rem;
+  }
+  
+  .gallery-featured {
+    gap: 1rem !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .art-card-featured {
+    width: 170px !important;
+  }
+  
+  .art-card-featured .art-info {
+    padding: 0.6rem;
+  }
+  
+  .art-card-featured h3 {
+    font-size: 0.8rem;
+  }
+  
+  .art-card-featured p {
+    font-size: 0.6rem;
+  }
+  
+  .gallery-featured {
+    gap: 0.8rem !important;
+    padding: 0.8rem 0.5rem 1.5rem 0.5rem !important;
+  }
+}
+
+/* Mobile muito pequeno */
+@media (max-width: 480px) {
+  .art-card-featured {
+    width: 150px !important;
+  }
+  
+  .art-card-featured .art-info {
+    padding: 0.5rem;
+  }
+  
+  .art-card-featured h3 {
+    font-size: 0.7rem;
+    margin-bottom: 0.15rem;
+  }
+  
+  .art-card-featured p {
+    font-size: 0.55rem;
+  }
+}
+
+/* ============================================ */
+/* ANIMAÇÃO SUTIL PARA OS CARDS                 */
+/* ============================================ */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.art-card-featured {
+  animation: fadeInUp 0.5s ease backwards;
+}
+
+.art-card-featured:nth-child(1) { animation-delay: 0.05s; }
+.art-card-featured:nth-child(2) { animation-delay: 0.1s; }
+.art-card-featured:nth-child(3) { animation-delay: 0.15s; }
+.art-card-featured:nth-child(4) { animation-delay: 0.2s; }
+.art-card-featured:nth-child(5) { animation-delay: 0.25s; }
+.art-card-featured:nth-child(6) { animation-delay: 0.3s; }
+
+/* ============================================ */
+/* INDICADOR DE SCROLL (opcional)               */
+/* ============================================ */
+
+.gallery-featured::after {
+  content: '';
+  position: sticky;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  background: linear-gradient(to right, transparent, var(--bg));
+  pointer-events: none;
+}
+
+/* Dica visual que pode scrollar (só aparece se touver overflow) */
+.gallery-featured {
+  scrollbar-width: thin;
+  scrollbar-color: var(--terracotta) var(--line);
+}
 }
