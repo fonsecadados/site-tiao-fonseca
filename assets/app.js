@@ -26,16 +26,6 @@ function renderFilters() {
     value: category
   }))
 );
-return filters;
-
-function getFilteredArtworks(selectedFilter) {
-
-  if (selectedFilter === "featured") {
-    return artworks.filter(item => item.featured);
-  }
-
-  return artworks.filter(item => item.category === selectedFilter);
-}
 
   filterBar.innerHTML = filters
     .map(
