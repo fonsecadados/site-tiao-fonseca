@@ -20,9 +20,13 @@ function categoryLabel(category) {
 
 function renderFilters() {
   const categories = [...new Set(artworks.map((item) => item.category).filter(Boolean))];
-  const filters = [{ label: "Todas", value: "all" }].concat(
-    categories.map((category) => ({ label: categoryLabel(category), value: category }))
-  );
+  const filters = [{ label: "Destaques", value: "featured" }].concat(
+  categories.map((category) => ({
+    label: categoryLabel(category),
+    value: category
+  }))
+);
+
 
   filterBar.innerHTML = filters
     .map(
@@ -49,7 +53,7 @@ function renderGallery(filter = "all") {
   gallery.innerHTML = filtered
     .map(
       (item) => `
-        <article class="art-card reveal" style="--ratio: ${item.ratio || "4 / 5"}" data-artwork="${item.id}" tabindex="0">
+        <article class="art-card reveal" style="--ratio: ${item.ratio || "3 / 4"}" data-artwork="${item.id}" tabindex="0">
           <img src="${item.image}" alt="${item.title}" loading="lazy">
           <div class="art-info">
             <h3>${item.title}</h3>
