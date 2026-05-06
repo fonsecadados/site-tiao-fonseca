@@ -52,7 +52,7 @@ function renderGallery(filter = "all") {
   activeFilter = filter;
   renderFilters();
 
-  const filtered = filter === "all" ? artworks : artworks.filter((item) => item.category === filter);
+  const filtered = filter === "all" ? artworks : getFilteredArtworks(filter);
 
   if (!filtered.length) {
     gallery.innerHTML = '<p class="gallery-empty">Nenhuma obra cadastrada nesta categoria.</p>';
@@ -62,7 +62,7 @@ function renderGallery(filter = "all") {
   gallery.innerHTML = filtered
     .map(
       (item) => `
-        <article class="art-card reveal" style="--ratio: ${item.ratio || "3 / 4"}" data-artwork="${item.id}" tabindex="0">
+        <article class="art-card reveal" style="--ratio: ${item.ratio || "4 / 5"}" data-artwork="${item.id}" tabindex="0">
           <img src="${item.image}" alt="${item.title}" loading="lazy">
           <div class="art-info">
             <h3>${item.title}</h3>
