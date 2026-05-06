@@ -1,5 +1,5 @@
 let artworks = [];
-let activeFilter = "all";
+let activeFilter = "featured"; // Mudar padrão para "featured" em vez de "all"
 
 const gallery = document.querySelector("[data-gallery]");
 const filterBar = document.querySelector("[data-filters]");
@@ -18,10 +18,17 @@ function categoryLabel(category) {
 }
 
 function renderFilters() {
+  // Obter categorias únicas (excluindo obras sem categoria)
   const categories = [...new Set(artworks.map((item) => item.category).filter(Boolean))];
-  const filters = [{ label: "Todas", value: "all" }].concat(
-    categories.map((category) => ({ label: categoryLabel(category), value: category }))
-  );
+  
+  // Criar botões: Primeiro "Destaque", depois as categorias
+  const filters = [
+    { label: "⭐ Destaque", value: "featured" },  // Substituir "Todas" por "Destaque"
+    ...categories.map((category) => ({ 
+      label: categoryLabel(category), 
+      value: category 
+    }))
+  ];
 
   filterBar.innerHTML = filters
     .map(
@@ -34,14 +41,25 @@ function renderFilters() {
     .join("");
 }
 
-function renderGallery(filter = "all") {
+function renderGallery(filter = "featured") {  // Mudar padrão para "featured"
   activeFilter = filter;
   renderFilters();
 
-  const filtered = filter === "all" ? artworks : artworks.filter((item) => item.category === filter);
+  let filtered;
+  
+  if (filter === "featured") {
+    // Filtrar apenas obras com featured === true
+    filtered = artworks.filter((item) => item.featured === true);
+  } else {
+    // Filtrar por categoria normalmente
+    filtered = artworks.filter((item) => item.category === filter);
+  }
 
   if (!filtered.length) {
-    gallery.innerHTML = '<p class="gallery-empty">Nenhuma obra cadastrada nesta categoria.</p>';
+    const message = filter === "featured" 
+      ? "Nenhuma obra em destaque no momento." 
+      : "Nenhuma obra cadastrada nesta categoria.";
+    gallery.innerHTML = `<p class="gallery-empty">${message}</p>`;
     return;
   }
 
@@ -49,6 +67,7 @@ function renderGallery(filter = "all") {
     .map(
       (item) => `
         <article class="art-card reveal" style="--ratio: ${item.ratio || "4 / 5"}" data-artwork="${item.id}" tabindex="0">
+          ${item.featured ? '<div class="featured-badge">⭐ Destaque</div>' : ''}
           <img src="${item.image}" alt="${item.title}" loading="lazy">
           <div class="art-info">
             <h3>${item.title}</h3>
@@ -71,6 +90,12 @@ function openModal(item) {
   modal.querySelector("[data-modal-year]").textContent = item.year;
   modal.querySelector("[data-modal-size]").textContent = item.size;
   modal.querySelector("[data-modal-description]").textContent = item.description;
+
+  // Adicionar badge de destaque no modal se for featured
+  const featuredBadge = modal.querySelector("[data-modal-featured]");
+  if (featuredBadge) {
+    featuredBadge.style.display = item.featured ? "inline-block" : "none";
+  }
 
   const message = encodeURIComponent(
     `Olá! Tenho interesse na obra "${item.title}". Gostaria de mais informações.`
@@ -111,7 +136,14 @@ async function loadArtworks() {
     const response = await fetch("./data/artworks.json", { cache: "no-store" });
     if (!response.ok) throw new Error("Não foi possível carregar data/artworks.json");
     artworks = await response.json();
-    renderGallery();
+    
+    // Garantir que todas as obras tenham o campo featured (default false)
+    artworks = artworks.map(artwork => ({
+      ...artwork,
+      featured: artwork.featured || false
+    }));
+    
+    renderGallery(); // Agora vai mostrar apenas destaques por padrão
   } catch (error) {
     gallery.innerHTML = `
       <p class="gallery-empty">
