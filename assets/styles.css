@@ -5,6 +5,7 @@
   --muted: #72685e;
   --line: #ded3c4;
   --terracotta: #9c563c;
+  --terracotta_hero: #c26f50;
   --gold: #c4963e;
   --green: #24433b;
   --shadow: 0 24px 70px rgba(40, 28, 18, 0.16);
@@ -64,7 +65,7 @@ a {
 
 .brand small,
 .eyebrow {
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.28em;
   text-transform: uppercase;
@@ -214,7 +215,7 @@ a {
 
 .eyebrow {
   margin: 0 0 18px;
-  color: var(--terracotta);
+  color: var(--terracotta_hero);
 }
 
 .intro h2,
