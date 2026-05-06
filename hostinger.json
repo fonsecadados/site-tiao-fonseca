@@ -1,8 +1,0 @@
-{
-  "version": "1.0",
-  "framework": "express",
-  "runtime": "nodejs20",
-  "startCommand": "npm start",
-  "port": 3000,
-  "publicDirectory": "public"
-}
