@@ -23,7 +23,7 @@ function renderFilters() {
   
   // Criar botões: Primeiro "Destaque", depois as categorias
   const filters = [
-    { label: "⭐ Destaque", value: "featured" },  // Substituir "Todas" por "Destaque"
+    { label: "Destaque", value: "featured" },  // Substituir "Todas" por "Destaque"
     ...categories.map((category) => ({ 
       label: categoryLabel(category), 
       value: category 
