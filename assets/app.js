@@ -7,6 +7,7 @@ const modal = document.querySelector("[data-modal]");
 const menu = document.querySelector("[data-menu]");
 const menuButton = document.querySelector("[data-menu-button]");
 
+
 function categoryLabel(category) {
   const labels = {
     pintura: "Pintura",
