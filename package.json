@@ -7,13 +7,17 @@
     "start": "node server.js",
     "dev": "node server.js"
   },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "keywords": [
     "portfolio",
     "arte",
     "galeria",
-    "nodejs"
+    "nodejs",
+    "express"
   ],
-  "author": "",
+  "author": "Tião Fonseca",
   "license": "MIT",
   "dependencies": {
     "express": "^5.2.1"
