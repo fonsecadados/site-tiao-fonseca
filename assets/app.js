@@ -1,79 +1,54 @@
-const artworks = [
-  {
-    id: 1,
-    title: "Paisagem de Dentro",
-    category: "pintura",
-    image: "./assets/images/work-1.png",
-    technique: "Acrílico e técnica mista",
-    year: "2024",
-    size: "90 x 120 cm",
-    ratio: "4 / 5",
-    description:
-      "Camadas terrosas e gestos largos evocam uma paisagem emocional entre memória, matéria e silêncio."
-  },
-  {
-    id: 2,
-    title: "Terra em Suspensão",
-    category: "serie",
-    image: "./assets/images/work-2.png",
-    technique: "Óleo sobre tela",
-    year: "2023",
-    size: "80 x 100 cm",
-    ratio: "1 / 1",
-    description:
-      "Uma composição de contraste quente, criada para sugerir profundidade sem abandonar a força do gesto."
-  },
-  {
-    id: 3,
-    title: "Memória Mineral",
-    category: "pintura",
-    image: "./assets/images/work-3.png",
-    technique: "Técnica mista sobre tela",
-    year: "2024",
-    size: "70 x 110 cm",
-    ratio: "3 / 4",
-    description:
-      "Textura densa, paleta mineral e movimento circular em diálogo com a tradição da pintura matérica."
-  },
-  {
-    id: 4,
-    title: "Cidade Antiga",
-    category: "serie",
-    image: "./assets/images/work-4.png",
-    technique: "Acrílico sobre tela",
-    year: "2022",
-    size: "100 x 140 cm",
-    ratio: "5 / 4",
-    description:
-      "Arquitetura, corpo e lembrança se cruzam em uma superfície que parece escavada pela cor."
-  },
-  {
-    id: 5,
-    title: "Rastro do Gesto",
-    category: "pintura",
-    image: "./assets/images/work-5.png",
-    technique: "Óleo e espátula",
-    year: "2025",
-    size: "60 x 90 cm",
-    ratio: "4 / 3",
-    description:
-      "Obra de ritmo intenso, pensada para aproximar o olhar do observador da mão que constrói a imagem."
-  }
-];
+let artworks = [];
+let activeFilter = "all";
 
 const gallery = document.querySelector("[data-gallery]");
-const filterButtons = document.querySelectorAll("[data-filter]");
+const filterBar = document.querySelector("[data-filters]");
 const modal = document.querySelector("[data-modal]");
 const menu = document.querySelector("[data-menu]");
 const menuButton = document.querySelector("[data-menu-button]");
 
+function categoryLabel(category) {
+  const labels = {
+    pintura: "Pintura",
+    serie: "Série",
+    escultura: "Escultura"
+  };
+
+  return labels[category] || category || "Obra";
+}
+
+function renderFilters() {
+  const categories = [...new Set(artworks.map((item) => item.category).filter(Boolean))];
+  const filters = [{ label: "Todas", value: "all" }].concat(
+    categories.map((category) => ({ label: categoryLabel(category), value: category }))
+  );
+
+  filterBar.innerHTML = filters
+    .map(
+      (filter) => `
+        <button class="${activeFilter === filter.value ? "active" : ""}" type="button" data-filter="${filter.value}">
+          ${filter.label}
+        </button>
+      `
+    )
+    .join("");
+}
+
 function renderGallery(filter = "all") {
+  activeFilter = filter;
+  renderFilters();
+
   const filtered = filter === "all" ? artworks : artworks.filter((item) => item.category === filter);
+
+  if (!filtered.length) {
+    gallery.innerHTML = '<p class="gallery-empty">Nenhuma obra cadastrada nesta categoria.</p>';
+    return;
+  }
 
   gallery.innerHTML = filtered
     .map(
       (item) => `
-        <article class="art-card reveal" style="--ratio: ${item.ratio}" data-artwork="${item.id}" tabindex="0">
+        <article class="art-card reveal" style="--ratio: ${item.ratio || "4 / 5"}" data-artwork="${item.id}" tabindex="0">
           <img src="${item.image}" alt="${item.title}" loading="lazy">
           <div class="art-info">
             <h3>${item.title}</h3>
@@ -90,8 +65,7 @@ function renderGallery(filter = "all") {
 function openModal(item) {
   modal.querySelector("[data-modal-image]").src = item.image;
   modal.querySelector("[data-modal-image]").alt = item.title;
-  modal.querySelector("[data-modal-category]").textContent =
-    item.category === "pintura" ? "Pintura" : "Série";
+  modal.querySelector("[data-modal-category]").textContent = categoryLabel(item.category);
   modal.querySelector("[data-modal-title]").textContent = item.title;
   modal.querySelector("[data-modal-technique]").textContent = item.technique;
   modal.querySelector("[data-modal-year]").textContent = item.year;
@@ -132,19 +106,33 @@ function observeReveals() {
   });
 }
 
-filterButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    filterButtons.forEach((item) => item.classList.remove("active"));
-    button.classList.add("active");
-    renderGallery(button.dataset.filter);
-  });
+async function loadArtworks() {
+  try {
+    const response = await fetch("./data/artworks.json", { cache: "no-store" });
+    if (!response.ok) throw new Error("Não foi possível carregar data/artworks.json");
+    artworks = await response.json();
+    renderGallery();
+  } catch (error) {
+    gallery.innerHTML = `
+      <p class="gallery-empty">
+        Não foi possível carregar as obras. Verifique o arquivo data/artworks.json.
+      </p>
+    `;
+    console.error(error);
+  }
+}
+
+filterBar.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-filter]");
+  if (!button) return;
+  renderGallery(button.dataset.filter);
 });
 
 gallery.addEventListener("click", (event) => {
   const card = event.target.closest("[data-artwork]");
   if (!card) return;
   const item = artworks.find((artwork) => artwork.id === Number(card.dataset.artwork));
-  openModal(item);
+  if (item) openModal(item);
 });
 
 gallery.addEventListener("keydown", (event) => {
@@ -152,7 +140,7 @@ gallery.addEventListener("keydown", (event) => {
   const card = event.target.closest("[data-artwork]");
   if (!card) return;
   const item = artworks.find((artwork) => artwork.id === Number(card.dataset.artwork));
-  openModal(item);
+  if (item) openModal(item);
 });
 
 document.querySelectorAll("[data-close-modal]").forEach((button) => {
@@ -171,5 +159,5 @@ menu.querySelectorAll("a").forEach((link) => {
   link.addEventListener("click", () => menu.classList.remove("open"));
 });
 
-renderGallery();
+loadArtworks();
 observeReveals();

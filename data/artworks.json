@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "title": "Paisagem de Dentro",
+    "category": "pintura",
+    "image": "./assets/images/work-1.png",
+    "technique": "Acrílico e técnica mista",
+    "year": "2024",
+    "size": "90 x 120 cm",
+    "ratio": "4 / 5",
+    "description": "Camadas terrosas e gestos largos evocam uma paisagem emocional entre memória, matéria e silêncio."
+  },
+  {
+    "id": 2,
+    "title": "Terra em Suspensão",
+    "category": "serie",
+    "image": "./assets/images/work-2.png",
+    "technique": "Óleo sobre tela",
+    "year": "2023",
+    "size": "80 x 100 cm",
+    "ratio": "1 / 1",
+    "description": "Uma composição de contraste quente, criada para sugerir profundidade sem abandonar a força do gesto."
+  },
+  {
+    "id": 3,
+    "title": "Memória Mineral",
+    "category": "pintura",
+    "image": "./assets/images/work-3.png",
+    "technique": "Técnica mista sobre tela",
+    "year": "2024",
+    "size": "70 x 110 cm",
+    "ratio": "3 / 4",
+    "description": "Textura densa, paleta mineral e movimento circular em diálogo com a tradição da pintura matérica."
+  },
+  {
+    "id": 4,
+    "title": "Cidade Antiga",
+    "category": "serie",
+    "image": "./assets/images/work-4.png",
+    "technique": "Acrílico sobre tela",
+    "year": "2022",
+    "size": "100 x 140 cm",
+    "ratio": "5 / 4",
+    "description": "Arquitetura, corpo e lembrança se cruzam em uma superfície que parece escavada pela cor."
+  },
+  {
+    "id": 5,
+    "title": "Rastro do Gesto",
+    "category": "pintura",
+    "image": "./assets/images/work-5.png",
+    "technique": "Óleo e espátula",
+    "year": "2025",
+    "size": "60 x 90 cm",
+    "ratio": "4 / 3",
+    "description": "Obra de ritmo intenso, pensada para aproximar o olhar do observador da mão que constrói a imagem."
+  }
+]

@@ -1,0 +1,282 @@
+:root {
+  --bg: #f4efe7;
+  --paper: #fbf8f2;
+  --ink: #181614;
+  --muted: #72685e;
+  --line: #ded3c4;
+  --terracotta: #9c563c;
+  --danger: #a4322d;
+  --display: "Cormorant Garamond", Georgia, serif;
+  --body: "Inter", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px clamp(20px, 5vw, 64px);
+  border-bottom: 1px solid var(--line);
+}
+
+.admin-header h1,
+.panel-heading h2 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1;
+}
+
+.admin-header h1 {
+  font-size: clamp(40px, 6vw, 76px);
+}
+
+.admin-header a {
+  color: var(--terracotta);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: var(--terracotta);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.admin-shell {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.9fr) minmax(360px, 1.1fr);
+  gap: 22px;
+  padding: clamp(20px, 4vw, 48px);
+}
+
+.admin-panel {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: clamp(20px, 3vw, 32px);
+}
+
+.artwork-list-panel {
+  grid-column: 1 / -1;
+}
+
+.panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.panel-heading h2 {
+  font-size: clamp(30px, 4vw, 48px);
+}
+
+.artwork-form,
+.actions-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+label {
+  display: grid;
+  gap: 8px;
+}
+
+label span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+label small,
+.helper-text {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.admin-status {
+  margin: 18px 0 0;
+  padding: 14px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.admin-status[data-type="success"] {
+  border-color: rgba(36, 67, 59, 0.35);
+  color: #24433b;
+}
+
+.admin-status[data-type="error"] {
+  border-color: rgba(164, 50, 45, 0.35);
+  color: var(--danger);
+}
+
+input,
+select,
+textarea,
+.json-output {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: #fffdf8;
+  color: var(--ink);
+  padding: 13px 14px;
+  outline: none;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: rgba(156, 86, 60, 0.68);
+}
+
+.primary-button,
+.secondary-button,
+.danger-button,
+.file-button {
+  min-height: 46px;
+  border: 1px solid transparent;
+  padding: 0 18px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.primary-button {
+  background: var(--terracotta);
+  color: #fffaf2;
+}
+
+.secondary-button,
+.file-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.danger-button {
+  background: transparent;
+  border-color: rgba(164, 50, 45, 0.35);
+  color: var(--danger);
+}
+
+.file-button input {
+  display: none;
+}
+
+.actions-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.json-output {
+  margin-top: 18px;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.admin-artwork-list {
+  display: grid;
+  gap: 14px;
+}
+
+.admin-artwork-card {
+  display: grid;
+  grid-template-columns: 96px 1fr auto;
+  gap: 16px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--line);
+  background: #fffdf8;
+}
+
+.admin-artwork-card img {
+  width: 96px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  background: #eee4d8;
+}
+
+.admin-artwork-card h3 {
+  margin: 0 0 6px;
+  font-family: var(--display);
+  font-size: 28px;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.admin-artwork-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+@media (max-width: 900px) {
+  .admin-shell,
+  .form-grid,
+  .actions-grid,
+  .admin-artwork-card {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-header,
+  .panel-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .card-actions {
+    flex-wrap: wrap;
+  }
+}
