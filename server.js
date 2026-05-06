@@ -87,6 +87,18 @@ const upload = multer({
   }
 });
 
+// 🔥 REDIRECT PARA WWW
+app.use((req, res, next) => {
+  const host = req.headers.host;
+
+  // evita loop infinito
+  if (host && !host.startsWith("www.")) {
+    return res.redirect(301, `https://www.${host}${req.url}`);
+  }
+
+  next();
+});
+
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(rootDir, { extensions: ["html"] }));
