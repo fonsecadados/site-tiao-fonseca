@@ -53,5 +53,27 @@
     "size": "60 x 90 cm",
     "ratio": "4 / 3",
     "description": "Obra de ritmo intenso, pensada para aproximar o olhar do observador da mão que constrói a imagem."
+  },
+  {
+    "id": 6,
+    "title": "Paisagens",
+    "category": "Cartão Postal",
+    "image": "./assets/images/cp-1.png",
+    "technique": "Nanquim e Aquarela",
+    "year": "2025",
+    "size": "60 x 90 cm",
+    "ratio": "4 / 3",
+    "description": "Obra de ritmo intenso, pensada para aproximar o olhar do observador da mão que constrói a imagem."
+  },
+  {
+    "id": 7,
+    "title": "Paisagens",
+    "category": "Cartão Postal",
+    "image": "./assets/images/cp-2.png",
+    "technique": "Nanquim e Aquarela",
+    "year": "2025",
+    "size": "60 x 90 cm",
+    "ratio": "4 / 3",
+    "description": "Obra de ritmo intenso, pensada para aproximar o olhar do observador da mão que constrói a imagem."
   }
 ]
