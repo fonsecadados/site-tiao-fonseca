@@ -7,7 +7,6 @@ const modal = document.querySelector("[data-modal]");
 const menu = document.querySelector("[data-menu]");
 const menuButton = document.querySelector("[data-menu-button]");
 
-
 function categoryLabel(category) {
   const labels = {
     pintura: "Pintura",
@@ -20,12 +19,9 @@ function categoryLabel(category) {
 
 function renderFilters() {
   const categories = [...new Set(artworks.map((item) => item.category).filter(Boolean))];
-  const filters = [{ label: "Destaques", value: "featured" }].concat(
-  categories.map((category) => ({
-    label: categoryLabel(category),
-    value: category
-  }))
-);
+  const filters = [{ label: "Todas", value: "all" }].concat(
+    categories.map((category) => ({ label: categoryLabel(category), value: category }))
+  );
 
   filterBar.innerHTML = filters
     .map(
@@ -42,7 +38,7 @@ function renderGallery(filter = "all") {
   activeFilter = filter;
   renderFilters();
 
-  const filtered = filter === "all" ? artworks : getFilteredArtworks(filter);
+  const filtered = filter === "all" ? artworks : artworks.filter((item) => item.category === filter);
 
   if (!filtered.length) {
     gallery.innerHTML = '<p class="gallery-empty">Nenhuma obra cadastrada nesta categoria.</p>';
